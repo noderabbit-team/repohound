@@ -1,3 +1,27 @@
 create a virtualenv, activate it, and install requirements in it:
 
 pip install -r requirements.txt
+
+overview
+========
+
+search.py 
+=========
+
+does the search, pulling fetching sets of 4 results, and 
+working around google's throttling.  
+Output goes into data.txt
+
+TODO: Replace with a real screen scraper, since the API limits to
+64 results
+
+
+
+select.py 
+=========
+
+parses the repo names out of data.txt and fetches the data on each
+repo from github.
+Result goes into a dict, which is pickled into pickled.pic
+
+
