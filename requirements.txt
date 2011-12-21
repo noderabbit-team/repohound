@@ -1,0 +1,4 @@
+simplejson
+requests
+-e git://github.com/coleifer/django-github.git#egg=django-github
+django

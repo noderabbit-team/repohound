@@ -1,0 +1,3 @@
+create a virtualenv, activate it, and install requirements in it:
+
+pip install -r requirements.txt
