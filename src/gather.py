@@ -63,6 +63,7 @@ def depth_first_score(root):
     score['upward'] = upward
     root['score'] = score
     dfs = sum(score.values())
+    root['dfs'] = dfs
     return dfs
 
 
@@ -72,35 +73,38 @@ def score_dataset(repdataset):
         depth_first_score(app)
 
 def header():
-    tup = ( 'name'.ljust(FIELD_WIDTH__NAME),
-            'tot'.rjust(5),
-            'fks'.rjust(5),
-            'wat'.rjust(5),
-            'frs'.rjust(5),
-            'upw'.rjust(5),
+    tup = ('name'.ljust(FIELD_WIDTH__NAME),
+           'tot'.rjust(5),
+           'fks'.rjust(5),
+           'wat'.rjust(5),
+           'frs'.rjust(5),
+           'upw'.rjust(5),
           )
-    return ' ' + ''.join( tup )
+    return ' ' + ''.join(tup)
 
 def dataline(name, app, indent=0):
     score = app['score']
-    tup = (name.ljust(FIELD_WIDTH__NAME-indent,'.'), 
-             str(sum(score.values())).rjust(5), 
-             str(score['forks']).rjust(5), 
-             str(score['watchers']).rjust(5), 
+    tup = (name.ljust(FIELD_WIDTH__NAME - indent,'.'),
+             str(sum(score.values())).rjust(5),
+             str(score['forks']).rjust(5),
+             str(score['watchers']).rjust(5),
              str(score['freshness']).rjust(5),
-             str(score.setdefault('upward', 0)).rjust(5) )
-    return ''.join( tup )
+             str(score.setdefault('upward', 0)).rjust(5))
+    return ''.join(tup)
 
 def display_as_tree(myname, myapp, depth=0):
-    print '  ' * depth, dataline(myname, myapp, depth*2)
+    print '  ' * depth, dataline(myname, myapp, depth * 2)
     children = myapp.setdefault('forkings', {})
     for name, app in children.items():
         display_as_tree(name, app, depth + 1)
 
-def display_as_list(repdataset):
+def display_list(repdataset):
     print header()
-    roots = (x for x in repdataset.items() if not x[1].setdefault('fork', False))
-    for name, app in roots:
+    roots = (x for x in repdataset.items() if not x[1].setdefault('fork',
+      False))
+    def comp(x,y):
+        return x[1]['dfs'] - y[1]['dfs']
+    for name, app in sorted(roots, comp, reverse=True):
         display_as_tree(name, app)
 
 
@@ -110,4 +114,4 @@ if __name__ == '__main__':
     repdataset['asciimoo/f33dme']['fork'] = True
     adorndataset(repdataset)
     score_dataset(repdataset)
-    display_as_list(repdataset)
+    display_list(repdataset)
