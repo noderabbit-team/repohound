@@ -20,8 +20,8 @@ query = urllib.urlencode({'q' : '"manage.py" "settings.py" "urls.py" intitle:"- 
 url = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&%s' % query
 start = 0
 out = open('data.txt', 'aw')
-out.seek(0,2)
-out.write(40*'*' + '\n' + str(datetime.datetime.now()) + '\n')
+out.seek(0, 2)
+out.write(40 * '*' + '\n' + str(datetime.datetime.now()) + '\n')
 while start < num_queries:
     request_url = '{0}&start={1}'.format(url, start)
     search_results = urllib.urlopen(request_url)
@@ -29,11 +29,13 @@ while start < num_queries:
     try:
         results = json['responseData']['results']
         for i in results:
-            out.write( i['title'] + ": " + i['url'] + "\n")
+            out.write(i['title'] + ": " + i['url'] + "\n")
         start += 4
+        #we were successful, so return to normal backoff
         backoff = BACKOFF
         out.flush()
     except TypeError:
         print '** empty result set at', start, 'backing off', backoff
         time.sleep(backoff)
+        # and remember to double it next time, if we still have problems
         backoff *= 2
