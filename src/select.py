@@ -1,11 +1,12 @@
 import pickle
+import pprint
 import time
 from github2.client import Github
 
 github = Github()
 
 f = open('data.txt', 'r')
-pickles = open('pickled.pic','w')
+pickles = open('pickled.pic', 'w')
 repdataset = {}
 for line in f:
     try:
@@ -22,6 +23,5 @@ f.close()
 pickle.dump(repdataset, pickles)
 pickles.close()
 
-import pprint
 pp = pprint.PrettyPrinter(indent=4)
 pp.pprint(repdataset)

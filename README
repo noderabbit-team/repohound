@@ -5,6 +5,10 @@ pip install -r requirements.txt
 overview
 ========
 
+data directory
+==============
+has some canned data snapshots, so far
+
 search.py 
 =========
 
@@ -20,7 +24,6 @@ TODO: Replace with a real screen scraper, since the API limits to
     - Scrapy
 
 
-
 select.py 
 =========
 
@@ -28,4 +31,30 @@ parses the repo names out of data.txt and fetches the data on each
 repo from github.
 Result goes into a dict, which is pickled into pickled.pic
 
+TODO: put the results in a hierarchy, respecting forks
+
+
+
+upload.py
+=========
+
+TODO: start this, based on some google spreadsheet code I have
+
+
+show.py
+=======
+
+Simply shows what's in the pickle file produced by select.py
+
+
+gather.py
+=========
+
+gathers items into a tree and does some rudimentary scoring.
+Takes input from the pickle file, at the moment.
+
+TODO
+====
+get the 8.5k django search data.
+put results to google docs
 
