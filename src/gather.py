@@ -24,7 +24,9 @@ def adorndataset(repdataset):
 
 
 def freshpoints(pushed_at):
-    """linear decline from 12*WEIGHT to no points at > 12 mo."""
+    """calculates bonus points for freshness.
+
+    Linear decline from 12*WEIGHT to no points at > 12 mo."""
     WEIGHT = 2
     if pushed_at is None:
         return 0
@@ -38,13 +40,12 @@ def freshpoints(pushed_at):
 def score_item(app):
     """Just a sketch of a scoring system. Returns a dict of component scores.
 
-    Ideally components are normalized right here, for complete decoupling,
+    Ideally components are normalized only here, for complete decoupling,
     so they can be combined into a multicolored bar, whose total length is
     indicative of an app's usefulness.
     XXX: eye-of-beholder! may need different scores for different folks.
-        Risk aversion, multilingual, need for massive scalability, etc.
+    e.g. Risk aversion, multilingual, need for massive scalability, etc.
     """
-
     score = {}
     score['forks'] = app.setdefault('forks',0)
     score['watchers'] = app.setdefault('watchers',0) / 10
@@ -53,14 +54,15 @@ def score_item(app):
 
 
 def depth_first_score(root):
-    children = root.setdefault('children', {})
+    children = root.setdefault('forkings', {})
     upward = 0
     for app in children.values():
         upward += depth_first_score(app)
     score = score_item(root)
     score['upward'] = upward
     root['score'] = score
-    return sum(score.values())
+    dfs = sum(score.values())
+    return dfs
 
 
 def score_dataset(repdataset):
