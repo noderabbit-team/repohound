@@ -1,6 +1,7 @@
 import datetime
 import pickle
 
+FIELD_WIDTH__NAME = 52
 
 def getDataset():
     pickles = open('pickled.pic', 'r')
@@ -71,7 +72,7 @@ def score_dataset(repdataset):
         depth_first_score(app)
 
 def header():
-    tup = ( 'name'.ljust(52),
+    tup = ( 'name'.ljust(FIELD_WIDTH__NAME),
             'tot'.rjust(5),
             'fks'.rjust(5),
             'wat'.rjust(5),
@@ -80,9 +81,9 @@ def header():
           )
     return ' ' + ''.join( tup )
 
-def dataline(name, app):
+def dataline(name, app, indent=0):
     score = app['score']
-    tup = (name.ljust(52,'.'), 
+    tup = (name.ljust(FIELD_WIDTH__NAME-indent,'.'), 
              str(sum(score.values())).rjust(5), 
              str(score['forks']).rjust(5), 
              str(score['watchers']).rjust(5), 
@@ -91,22 +92,22 @@ def dataline(name, app):
     return ''.join( tup )
 
 def display_as_tree(myname, myapp, depth=0):
-    print '  ' * depth, dataline(myname, myapp)
-    children = myapp.setdefault('children', {})
-    for name, app in children:
+    print '  ' * depth, dataline(myname, myapp, depth*2)
+    children = myapp.setdefault('forkings', {})
+    for name, app in children.items():
         display_as_tree(name, app, depth + 1)
 
 def display_as_list(repdataset):
     print header()
-    roots = (x for x in repdataset.items())
+    roots = (x for x in repdataset.items() if not x[1].setdefault('fork', False))
     for name, app in roots:
         display_as_tree(name, app)
 
 
 if __name__ == '__main__':
     repdataset = getDataset()
-    repdataset['marinho/hippocampus']['parent'] = 'redvasily/django-emailauth'
-    print repdataset['marinho/hippocampus']
+    repdataset['asciimoo/f33dme']['parent'] = 'redvasily/django-emailauth'
+    repdataset['asciimoo/f33dme']['fork'] = True
     adorndataset(repdataset)
     score_dataset(repdataset)
     display_as_list(repdataset)
