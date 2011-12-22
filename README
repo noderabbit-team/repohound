@@ -5,6 +5,10 @@ pip install -r requirements.txt
 overview
 ========
 
+data directory
+==============
+has some canned data snapshots, so far
+
 search.py 
 =========
 
@@ -22,6 +26,15 @@ select.py
 parses the repo names out of data.txt and fetches the data on each
 repo from github.
 Result goes into a dict, which is pickled into pickled.pic
+
+TODO: put the results in a hierarchy, respecting forks
+
+
+
+upload.py
+=========
+
+TODO: start this, based on some google spreadsheet code I have
 
 
 show.py
