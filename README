@@ -19,6 +19,10 @@ Output goes into data.txt
 TODO: Replace with a real screen scraper, since the API limits to
 64 results
 
+    - BeautifulSoup
+    - lxml
+    - Scrapy
+
 
 select.py 
 =========
