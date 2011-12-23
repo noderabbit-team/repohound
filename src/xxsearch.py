@@ -5,7 +5,7 @@ f = open('a.txt','wb')
 
 for i in range(0,100):
     wt = random.uniform(3, 10)
-    q = '"manage.py" "settings.py" "urls.py" intitle:"- Github" -inurl:/wiki/ -inurl:manage.py -inurl:commits -inurl:README -inurl:gist site:github.com'
+    q = '"manage.py" "settings.py" "urls.py" intitle:"- Github" -inurl:/blob/ -inurl:/wiki/ -inurl:manage.py -inurl:commits -inurl:README -inurl:gist site:github.com'
     gs = GoogleSearch(q)
     gs.results_per_page = 100
     gs.page = i
