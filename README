@@ -58,3 +58,9 @@ TODO
 get the 8.5k django search data.
 put results to google docs
 
+Resources
+=========
+
+Readthedocs.org API - http://read-the-docs.readthedocs.org/en/latest/index.html#developer-documentation
+PyPi API - ask Richard Jones if we want a dump of the entire PyPi database. http://wiki.python.org/moin/CheeseShopDev
+Github API - http://developer.github.com/
